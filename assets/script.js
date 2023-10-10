@@ -51,12 +51,10 @@ for (let i = 0; i < hours.length; i++) {
   var timeBlock = template.content.cloneNode(true)
   timeBlock.querySelector(".hour").textContent = timeStamps(hours[i])
   timeBlock.querySelector("textarea").classList.add(timeClass(hours[i]))
+  timeBlock.querySelector("textarea").textContent= localStorage.getItem(hours[i])
   timeBlock.querySelector("button").addEventListener("click", function (event) {
     localStorage.setItem(hours[i], event.currentTarget.previousElementSibling.value)
-    console.log(event.currentTarget)
-    console.log (hours[i])
-   
-
+  
   })
   
   container.append(timeBlock)
