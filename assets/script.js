@@ -4,13 +4,21 @@
 
 
 var dateString = dayjs().format("dddd, MMMM DD")
-console.log(dateString)
+
+var currentTime = dayjs().format("HH")
+console.log(currentTime)
 var dateEl = document.querySelector("#currentDay")
 dateEl.textContent = dateString
 var container = document.querySelector(".container-lg")
 var template = document.querySelector("template")
 
 var hours = [9, 10, 11, 12, 13, 14, 15, 16, 17]
+
+function timeClass(hour) {
+  if (hour === currentTime) return "present"
+  else if (hour > currentTime) return "future"
+  else if (hour < currentTime) return "past"
+}
 
 function timeStamps(hour) {
   switch (hour) {
@@ -39,9 +47,18 @@ function timeStamps(hour) {
 
 }
 for (let i = 0; i < hours.length; i++) {
-  const element = hours[i];
+  
   var timeBlock = template.content.cloneNode(true)
-  timeBlock.querySelector(".hour").textContent = timeStamps(element)
+  timeBlock.querySelector(".hour").textContent = timeStamps(hours[i])
+  timeBlock.querySelector("textarea").classList.add(timeClass(hours[i]))
+  timeBlock.querySelector("button").addEventListener("click", function (event) {
+    localStorage.setItem(hours[i], event.currentTarget.previousElementSibling.value)
+    console.log(event.currentTarget)
+    console.log (hours[i])
+   
+
+  })
+  
   container.append(timeBlock)
 
 
